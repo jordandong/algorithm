@@ -22,7 +22,7 @@ LinkedListNode* ReverseLinkedList(LinkedListNode* head, LinkedListNode* &newhead
 	return tmp;
 }
 
-LinkedListNode* ReverseLinkedListII(LinkedListNode* head){
+void ReverseLinkedListII(LinkedListNode* &head){
 	LinkedListNode* prev=NULL;
 	LinkedListNode* curr=head;
 	while(head){
@@ -31,7 +31,28 @@ LinkedListNode* ReverseLinkedListII(LinkedListNode* head){
 		prev=head;
 		head=curr;
 	}
-	return prev;
+	head=prev;
+}
+
+void Delete(LinkedListNode* &root, int val){
+	LinkedListNode* prev=NULL;
+	LinkedListNode* curr=root;
+	if(root->data==val){
+		prev=root->next;
+		delete root;
+		root = prev;
+	}
+	else{
+		while(curr&&curr->data!=val){
+			prev=curr;
+			curr=curr->next;
+		}
+		if(curr){
+			curr=curr->next;
+			delete prev->next;
+			prev->next=curr;
+		}
+	}	
 }
 
 void printLinkedList(LinkedListNode* head){
@@ -58,10 +79,15 @@ int main(){
 		}
 	}
 	printLinkedList(head);
-	LinkedListNode* newhead;
-	ReverseLinkedList(head,newhead);
-	printLinkedList(newhead);
-	printLinkedList(ReverseLinkedListII(newhead));
-	
+	LinkedListNode* newhead=NULL;
+
+	ReverseLinkedListII(head);
+	printLinkedList(head);
+
+	Delete(head, 3);
+	printLinkedList(head);
+
+	ReverseLinkedList(head, newhead);
+	printLinkedList(newhead);	
 	return 0;
 }
