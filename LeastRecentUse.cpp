@@ -45,9 +45,13 @@ void LRU::del(){
 }
 
 int LRU::get(string key){
-	if(entrymap.find(key)!=entrymap.end())
-		return entrymap[key]->second;
-	else
+	if(entrymap.find(key)!=entrymap.end()){
+		int value = entrymap[key]->second;
+		entrylist.erase(entrymap[key]);
+		entrylist.push_front(make_pair(key, value));
+		entrymap[key] = entrylist.begin();
+		return value;
+	} else
 		return -1;
 }
 
