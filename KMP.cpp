@@ -1,3 +1,10 @@
+/*
+  Find a sting p in a string s,
+  if found , return the pos
+  if not, return -1
+*/
+
+
 #include <iostream>
 #include <string>
 using namespace std;
