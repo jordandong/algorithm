@@ -20,7 +20,7 @@ vector<string> r_polish(vector<string> vs){
         if(e == "("){//highest priority  
             stk.push(e);
         }else if(e == "-" || e == "+"){ // * and / has higher priority than + and -
-            while(!stk.empty() && (stk.top() == "*" || stk.top() == "/")){
+            while(!stk.empty() && (stk.top() == "-" || stk.top() == "*" || stk.top() == "/")){
                 res.push_back(stk.top());
                 stk.pop();
             }
