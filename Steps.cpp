@@ -63,6 +63,27 @@ int stepsDP(int n){
 	return dp[n];
 }
 
+int twostepsDP(int n){
+	int dp[n+1];
+	dp[0] = 1;
+	dp[1] = 1;
+	for(int i=2; i<=n;i++){
+        dp[i] = dp[i-1] + dp[i-2];
+	}
+	return dp[n];
+}
+
+int steps_lgn(int n){
+
+	if(n==0 || n==1)
+		return 1;
+	if(n==2)
+		return 2;
+	int first_half = n&1?(n-1)>>1:n>>1;
+	int second_half = n&1?(n+1)>>1:n>>1;
+	return steps_lgn(first_half)*steps_lgn(second_half) + steps_lgn(first_half-1)*steps_lgn(second_half-1);
+}
+
 int main(){
 	int n;
 	vector<string> vec;
@@ -73,6 +94,8 @@ int main(){
 	int dp = stepsDP(n);
 
 	cout<<"There are "<<res<<" /"<<dp<<" ways to finish theses steps!!"<<endl;
+
+	cout<<"lgn -> There are "<<steps_lgn(n)<<" / "<<twostepsDP(n)<<" ways to finish these steps!!"<<endl;
 
 	for (int i=0;i<vec.size(); i++)
 		cout<<i<<":" <<vec.at(i)<<endl;
