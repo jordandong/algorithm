@@ -2,7 +2,15 @@
  *e.g
  *input 4
  *output 7 (1111,112,121,211,22,13,31)
- * O(lgn) alg
+ *O(lgn) alg added, actually nth Fibonacci num is the step(n-1) when steps are one or two.
+ *e.g n =5
+ *1 1     1 1 1
+ *2       2 1     ----> 2*3 =  6
+ *        1 2
+ *                               -------> 6 + 2 == 8
+ *1   2   1 1
+ *        2       -----> 1*2 = 2 
+ *binary search, half*half + (half-1)*(half-1) which is connection with 2   
  */
 
 #include<iostream>
