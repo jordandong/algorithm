@@ -2,6 +2,7 @@
  *e.g
  *input 4
  *output 7 (1111,112,121,211,22,13,31)
+ * O(lgn) alg
  */
 
 #include<iostream>
