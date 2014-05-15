@@ -1,7 +1,7 @@
 /* find the largest subseq with max sum
  *
-/* find the largest sunseq with max product
-
+ * find the largest sunseq with max product
+ */
 #include<iostream>
 #include<vector>
 using namespace std;
