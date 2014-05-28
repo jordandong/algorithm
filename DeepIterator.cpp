@@ -58,22 +58,3 @@ public class DeepInterator {
 
 		}
 }
-
-
-
-
-public class DeepIterator {
-
-    private Stack<Object> stack;
-
-    public DeepIterator(List<Object> list) {
-        stack = new Stack<Object>();
-        stack.push(list);
-        advanceToNext();
-    }
-
-    public boolean hasNext() {
-        return !stack.isEmpty();
-    }
-
-    public int next() {
