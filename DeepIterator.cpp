@@ -58,3 +58,44 @@ public class DeepInterator {
 
 		}
 }
+
+
+
+public class DeepIterator {
+
+    private Stack<Object> stack;
+
+    public DeepIterator(List<Object> list) {
+        stack = new Stack<Object>();
+        stack.push(list);
+        advanceToNext();
+    }
+
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+
+    public int next() {
+        if (!hasNext())
+            throw new RuntimeException("no next");
+
+        int result = (Integer) stack.pop();
+        advanceToNext();
+        
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void advanceToNext() {
+        while (!stack.isEmpty() && !(stack.peek() instanceof Integer)) {
+            Object obj = stack.pop();
+            if (obj == null)
+                continue;
+
+            List<Object> cur = (List<Object>) obj;
+
+            for (int i = cur.size() - 1; i >= 0; i--)
+                stack.push(cur.get(i));
+        }
+    }
+}
