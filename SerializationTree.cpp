@@ -115,3 +115,29 @@ int main(){
 
 	return 0;
 }
+
+//*********************************************
+
+void Serialize(TreeNode * node, vector<char> &output)
+{
+       if(node == NULL){
+             output.push_back('#');
+             return;
+       }
+
+       output.push_back(node->val + '0');
+       Serialize(node->left, output);
+       Serialize(node->right, output);
+}
+
+TreeNode *Deserialize(vector<char> output, int &index)
+{
+       if(index > output.size() || output[index] == '#') return NULL;
+
+       TreeNode *node = new TreeNode(output[index] -'0');
+       index ++;
+       node->left = Deserialize(output, index);
+       index++;
+       node->right = Deserialize(output, index);
+       return node;
+}
