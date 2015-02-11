@@ -66,6 +66,52 @@
   */
 
 #include<iostream>
+#include<vector>
+using namespace std;
+
+void PComb(int val, int s, vector<int> &res){
+    if(val == 1){
+        int n = res.size();   
+        if(n == 0){
+            cout<<val<<"*1"<<endl;;
+            return;
+        }
+        if(n == 1){
+            cout<<res[0]<<"*1"<<endl;;
+            return;
+        }
+        for(int i = 0; i < n; i++){
+            if(i==0)
+                cout<<res[i];
+            else
+                cout<<"*"<<res[i];
+        }
+        cout<<endl;
+        return;
+    }
+
+    for(int d = s; d > 1; d--){
+        if(val%d == 0){
+            res.push_back(d);
+            PComb(val/d, d, res);
+            res.pop_back();
+        }
+    }
+}
+
+int main(){
+    for(int v = 30; v>=1; v-=1){
+        vector<int> res;
+        cout<<v<<"="<<endl;
+        PComb(v, v, res);
+        cout<<endl;
+    }
+    return 0;
+}
+
+
+
+#include<iostream>
 #include<string>
 #include<sstream>
 #include<fstream>
