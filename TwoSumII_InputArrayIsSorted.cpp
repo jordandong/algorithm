@@ -12,7 +12,7 @@ Output: index1=1, index2=2
 #include<iostream>
 #include<vector>
 #include<string>
-//#include<unordered_map>
+#include<unordered_map>
 using namespace std;
 
 class Solution {
@@ -32,7 +32,7 @@ public:
         }
         return res;
     }
-#if 0
+
     vector<int> twoSum2(vector<int> &numbers, int target){
         unordered_map<int, int> mp;
         vector<int> res(2, -1);
@@ -47,7 +47,6 @@ public:
         }
         return res;
     }
-#endif  
 };
 
 int main(){
@@ -62,6 +61,8 @@ int main(){
         int a;  
         cin>>a;
         res = sol.twoSum(data, a);
+        cout<<res[0]<<" "<<res[1]<<endl;
+        res = sol.twoSum2(data, a);
         cout<<res[0]<<" "<<res[1]<<endl;
     }
     return 0;
