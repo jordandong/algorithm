@@ -5,6 +5,9 @@
 #include <unistd.h>
 #include <sys/inotify.h>
 #include <sys/types.h>
+#include <string>
+#include <iostream>
+using namespace std;
 
 #define EVENT_SIZE  ( sizeof (struct inotify_event) )
 #define BUF_LEN     ( 1024 * ( EVENT_SIZE + 16 ) )
@@ -15,14 +18,14 @@ void reg_test(){
     char msgbuf[100];
 
     /* Compile regular expression */
-    reti = regcomp(&regex, "[a]{3,4}", REG_EXTENDED|REG_NEWLINE);
+    reti = regcomp(&regex, "^[^\\s]*.google\\.com/[^\\s]*$", REG_EXTENDED|REG_NEWLINE);
     if (reti) {
         fprintf(stderr, "Could not compile regex\n");
         exit(1);
     }
 
     /* Execute regular expression */
-    reti = regexec(&regex, "aaaa", 0, NULL, 0);
+    reti = regexec(&regex, "www.google.com/aaaa", 0, NULL, 0);
     if (!reti) {
         puts("Match");
     }
@@ -86,10 +89,32 @@ void inotify_test(){
     close( fd );
 }
 
+bool algo(string &s, string &p, int is, int ip){
+     if(is == s.length()){
+         while(ip < p.length() && p[ip] == '*')
+             ip++; 
+         return ip == p.length();          
+     }
+     if(ip == p.length())
+         return false;
+     if(p[ip] == '*'){
+         return algo(s, p, is, ip+1) || algo(s, p, is+1, ip);
+     }else{
+         if(p[ip] != s[is])
+             return false;
+	 return algo(s, p, is+1, ip+1);
+     }
+}
+
 int main(){
     reg_test();
-    int i = 0;
+    int i = 10;
     while(i++ < 10)
         inotify_test();
+    string p = "*.google.com/*";
+    string s = "www.google.com/asd";
+    cin>>s;
+    cout<<p<<"<=>"<<s<<" "<<algo(s, p, 0, 0)<<endl;
+    cout<<"DONE"<<endl;
     return 0;
 }
