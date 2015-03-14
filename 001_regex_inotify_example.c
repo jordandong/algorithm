@@ -18,7 +18,9 @@ void reg_test(){
     char msgbuf[100];
 
     /* Compile regular expression */
-    reti = regcomp(&regex, "^[^\\s]*.google\\.com/[^\\s]*$", REG_EXTENDED|REG_NEWLINE);
+    string s = "^[^\\s]*";
+    s += ".google\\.com/[^\\s]*$";
+    reti = regcomp(&regex, s.c_str(), REG_EXTENDED|REG_NEWLINE);
     if (reti) {
         fprintf(stderr, "Could not compile regex\n");
         exit(1);
@@ -106,6 +108,33 @@ bool algo(string &s, string &p, int is, int ip){
      }
 }
 
+bool algo2(const char *s, const char *p) {
+    if(!p || !s)
+        return p == s;
+    
+    const char *star = NULL; //pos of *
+    const char *pos_s = s;
+    while(*s){
+        if (*p == '*') {
+            star = p++; //record * pos and move to next char in p 
+            pos_s = s;//pos_s is the char in s that will start to match with the char after * in p
+        } else if(*s != *p) { //no matching
+            if(!star){ //no * to match this char in s
+                return false;
+            }else{  // * could match char in s
+                p = star + 1; //move to the char after * in p again 
+                s = ++pos_s; //char at pos_s is matched using *, move to next char after pos_s
+            }
+        } else {//match
+            s++;
+            p++;
+        }
+    }
+    while(*p == '*')
+        p++; // * at the end could match nothing
+    return !*p; // check if it is the end of p
+}
+
 int main(){
     reg_test();
     int i = 10;
@@ -114,7 +143,8 @@ int main(){
     string p = "*.google.com/*";
     string s = "www.google.com/asd";
     cin>>s;
-    cout<<p<<"<=>"<<s<<" "<<algo(s, p, 0, 0)<<endl;
+    cout<<p<<"<algo1>"<<s<<" "<<algo(s, p, 0, 0)<<endl;
+    cout<<p<<"<algo2>"<<s<<" "<<algo2(s.c_str(), p.c_str())<<endl;
     cout<<"DONE"<<endl;
     return 0;
 }
