@@ -3,6 +3,68 @@ given a completed tree and the num of the leaves.
 the node is set to true only when all the child nodes below it are set to true.
 implement set and clear leaf node func
 */
+
+//set a range of bits
+#include <iostream>
+#include <vector>
+#include <math.h>
+using namespace std;
+
+int LV = 4;
+vector<vector<bool> > bmp(LV + 1, vector<bool>((int)pow(2.0, (double)LV), false));
+
+void BitsHelper(int lv, int idx){
+    if(lv < 0)
+        return;
+    if(bmp[lv + 1][idx*2] && bmp[lv + 1][idx*2 + 1])
+        bmp[lv][idx] = true;
+    else
+        bmp[lv][idx] = false;
+    BitsHelper(lv - 1, idx/2);
+}
+
+void setBit(int offset, int len){
+    for(int i = 0; i < len; i++){
+        if(bmp.back()[i + offset])
+            continue;
+        bmp.back()[i + offset] = true;
+        BitsHelper((int)bmp.size() - 2, (offset + i)/2);
+    }
+}
+
+void clearBit(int offset, int len){
+    for(int i = 0; i < len; i++){
+        if(!bmp.back()[i + offset])
+            continue;
+        bmp.back()[i + offset] = false;
+        BitsHelper((int)bmp.size() - 2, (offset + i)/2);
+    }
+}
+
+void print(){
+    for(int i = 0; i <= LV; i++){
+        int num = (int)pow(2.0, (double)i);
+        for(int j = 0; j < num; j++)
+            cout<<bmp[i][j];
+        cout<<endl;
+    }
+    cout<<endl;
+}
+
+int main(){
+    print();
+    setBit(2, 10);
+    print();
+    setBit(0, 15);
+    print();
+    clearBit(3, 5);
+    print();
+    clearBit(0, 16);
+    print();
+    return 0;
+}
+
+//set single bit
 #include <iostream>
 #include <queue>
 using namespace std;
@@ -25,9 +87,10 @@ void BitsHelper(Node* root, int offset, int len, bool is_set){
         BitsHelper(root->l, offset, len/2, is_set);
     else
         BitsHelper(root->r, offset - len/2, len/2, is_set);
-    if(root->l->val == is_set && root->r->val == is_set)
-        root->val = is_set;
-    return;
+    if(root->l->val && root->r->val)
+        root->val = true;
+    else
+        root->val = false;
 }
 
 void setBit(Node* root, int offset, int len){
