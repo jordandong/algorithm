@@ -1,5 +1,5 @@
 /*
-Sort Array and make sure the Array to meet a0<=a1>=a2<=a3>=a4....
+Sort a given Array and make sure the Array to meet a0<=a1>=a2<=a3>=a4.... after sorting
 */
 
 #include<iostream>
