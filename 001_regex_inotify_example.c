@@ -39,7 +39,6 @@ void reg_test(){
         fprintf(stderr, "Regex match failed: %s\n", msgbuf);
         exit(1);
     }
-
     /* Free compiled regular expression if you want to use the regex_t again */
     regfree(&regex);
 }
