@@ -1,6 +1,5 @@
 /*
  * Given that integers are read from a data stream. Find median of elements read so for in efficient way.
- *
  */
 
 #include<iostream>
