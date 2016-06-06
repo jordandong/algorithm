@@ -87,7 +87,7 @@ int main() {
     int cnt = 18;
     while(cur && cnt) {
         cout<<cur->val<<" ";
-        cur = cur->right;\
+        cur = cur->right;
         cnt--;
     }
     cout<<endl;
