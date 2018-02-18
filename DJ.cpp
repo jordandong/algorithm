@@ -24,7 +24,7 @@ using namespace std;
  *     -1 means infinite, unreachable
  */
 
-#define DEBUG_LL_RANGE 1
+#define DEBUG_LL_RANGE 0
 #define LMAX 0x7fffffffffffffff
 
 //TIME : O(N*N*logN), SPACE : O(N)
@@ -231,7 +231,7 @@ int main()
     }
     cout<<endl;
     
-    dG = {{0, 1, 10, 10}, {0, 0, 2, 8}, {0, 0, 0, -1}, {0, 0, 0, 0}};
+    dG = {{0, 1, 10, 10}, {0, 0, 2, -1}, {0, 0, 0, 1}, {0, 0, 0, 0}};
     ans = dijkstra_v1(dG, 0);
     cout<<"v1 case 7 normal input with -1, ans size: "<<ans.size()<<endl;
     for (auto e : ans) {
